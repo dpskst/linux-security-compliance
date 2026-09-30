@@ -214,6 +214,8 @@ SSH, Firewall, SELinux, Password Policy, 파일 권한 등의 설정은 자동�
 
 ## 7. GitHub Actions
 
+<img width="795" height="721" alt="image" src="https://github.com/user-attachments/assets/e251b27f-88c7-4a61-8a9a-dcd3958e0134" />
+
 GitHub Actions를 이용하여 보안 점검 프로세스를 자동화했습니다.
 
 ### Workflow
