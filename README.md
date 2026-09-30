@@ -191,28 +191,9 @@ Linux 서버의 주요 보안 설정 및 운영 상태를 총 30개 항목으로
 
     chmod +x scripts/security-check.sh
     ./scripts/security-check.sh
+    
+<img width="469" height="621" alt="image" src="https://github.com/user-attachments/assets/23fe761e-6abc-4771-a20f-a7af87d7087e" />
 
-### Execution Result
-
-    Linux Security Compliance Report
-    ========================================
-
-    [FAIL] U-01 - Root 원격 로그인 제한
-    [PASS] U-02 - SSH 설정 확인
-    [FAIL] U-03 - 패스워드 최대 사용 기간
-    [FAIL] U-04 - Firewall 활성화
-    [PASS] U-05 - SSH 서비스 활성화 상태
-    [PASS] U-06 - 일반 사용자 계정 확인
-    [PASS] U-07 - 추가 UID 0 계정 존재 여부
-    [PASS] U-08 - /etc/passwd 파일 권한
-    [PASS] U-09 - /etc/shadow 파일 권한
-    [PASS] U-10 - SSH 서비스 실행 상태
-    ...
-    [PASS] U-30 - 주요 보안 서비스 실행 상태
-
-    ========================================
-    PASS : 21
-    FAIL : 9
 
 ### Test Result
 
