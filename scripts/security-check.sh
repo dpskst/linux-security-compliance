@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REPORT="/root/project-05-security/reports/security-report.txt"
+REPORT="$(dirname "$0")/../reports/security-report.txt"
 
 PASS=0
 FAIL=0
