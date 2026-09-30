@@ -1,135 +1,160 @@
 # Linux Security Compliance Automation
 
-Linux 서버의 주요 보안 설정 및 운영 상태를 자동으로 점검하고, GitHub Actions를 통해 점검 결과를 자동으로 생성 및 보관하는 Linux Security Compliance Automation 프로젝트입니다.
+Linux 서버의 주요 보안 설정 및 운영 상태를 자동으로 점검하고, GitHub Actions를 통해 점검 결과를 자동으로 생성 및 관리하는 Linux Security Compliance Automation 프로젝트입니다.
 
-본 프로젝트는 서버의 보안 설정을 직접 변경하지 않고, 현재 상태를 진단하여 PASS / FAIL 형태로 결과를 제공하는 것을 목적으로 합니다.
-
----
-
-## 1. 프로젝트 개요
-
-Linux 서버 운영 환경에서는 SSH, 사용자 계정, 파일 권한, Firewall, SELinux, 로그 서비스 등 다양한 보안 설정을 지속적으로 점검해야 합니다.
-
-본 프로젝트에서는 이러한 반복적인 보안 점검 작업을 Bash Script로 자동화하고, GitHub Actions와 Self-hosted Runner를 이용하여 자동 실행 환경을 구성했습니다.
-
-### 주요 기능
-
-- Linux 서버 보안 상태 자동 점검
-- 총 30개 보안 점검 항목
-- PASS / FAIL 결과 출력
-- TXT 형식의 보안 점검 리포트 생성
-- HTML 형식의 보안 점검 리포트 생성
-- GitHub Actions를 이용한 자동 실행
-- Self-hosted Runner를 이용한 Linux 서버 실행
-- GitHub Actions Artifact를 이용한 결과 보관
+기존의 수동 보안 점검 작업을 Bash Script로 자동화하고, Self-hosted Runner를 활용하여 실제 Linux 서버에서 보안 점검을 수행하도록 구성했습니다.
 
 ---
 
-## 2. 프로젝트 목표
+## 1. Project Overview
 
-### 2.1 Linux 보안 점검 자동화
+### Background
 
-수동으로 수행하던 Linux 서버 보안 점검을 Shell Script로 자동화합니다.
+Linux 서버 운영 환경에서는 SSH 설정, 사용자 계정, 파일 권한, Firewall, SELinux, Audit Log 등 다양한 보안 항목을 지속적으로 점검해야 합니다.
 
-### 2.2 점검 결과 표준화
+본 프로젝트에서는 반복적으로 수행되는 Linux 보안 점검 작업을 자동화하고, GitHub Actions를 통해 자동으로 보안 상태를 확인할 수 있는 환경을 구축했습니다.
 
-각 보안 항목의 결과를 PASS / FAIL 형태로 표준화하여 서버의 보안 상태를 빠르게 확인할 수 있도록 구성합니다.
+### Objectives
 
-### 2.3 CI/CD 기반 자동화
+- Linux 서버 보안 점검 자동화
+- Shell Script 기반 보안 상태 진단
+- GitHub Actions 기반 자동화
+- Self-hosted Runner 구성
+- TXT / HTML 형식의 Report 생성
+- GitHub Actions Artifact를 이용한 결과 관리
 
-GitHub에 변경사항이 Push되면 GitHub Actions가 자동으로 보안 점검 Script를 실행하도록 구성합니다.
+### Key Features
 
-### 2.4 Report 자동 생성
-
-보안 점검 결과를 TXT와 HTML 형식으로 생성하여 사람이 쉽게 확인하고 결과를 보관할 수 있도록 구성합니다.
+- 총 30개 Linux 보안 점검 항목
+- PASS / FAIL 기반 점검 결과
+- Security Compliance 계산
+- HTML Report 자동 생성
+- GitHub Actions 자동 실행
+- Self-hosted Runner를 통한 실제 서버 점검
+- 서버 설정을 변경하지 않는 진단 중심 구조
 
 ---
 
-## 3. 시스템 환경
+## 2. Architecture
 
-| 구분 | 환경 |
+    GitHub Repository
+            |
+            | git push
+            v
+       GitHub Actions
+            |
+            v
+    Self-hosted Runner
+         devops-lab
+            |
+            v
+     security-check.sh
+            |
+            v
+      30개 보안 점검
+            |
+       +----+----+
+       |         |
+       v         v
+  TXT Report   generate-report.sh
+                    |
+                    v
+             HTML Report
+                    |
+                    v
+          GitHub Actions Artifact
+
+### Workflow
+
+    Developer
+        |
+        | git push
+        v
+    GitHub
+        |
+        v
+    GitHub Actions
+        |
+        v
+    Self-hosted Runner
+        |
+        v
+    Security Check
+        |
+        +----> TXT Report
+        |
+        +----> HTML Report
+        |
+        v
+    Artifact Upload
+
+---
+
+## 3. Environment
+
+| Category | Environment |
 |---|---|
 | OS | Rocky Linux 8.10 |
 | Server | devops-lab |
 | Script | Bash |
-| Repository | GitHub |
 | CI/CD | GitHub Actions |
-| Runner | Self-hosted Runner |
+| Runner | GitHub Actions Self-hosted Runner |
+| Repository | GitHub |
 | Report | TXT / HTML |
 
 ---
 
-## 4. 시스템 구성
+## 4. Tech Stack
 
-~~~text
-                         GitHub Repository
-                                |
-                                | git push
-                                v
-                       GitHub Actions
-                                |
-                                v
-                    Self-hosted Runner
-                         devops-lab
-                                |
-                                v
-                     security-check.sh
-                                |
-                                v
-                       30개 보안 점검
-                                |
-                    +-----------+-----------+
-                    |                       |
-                    v                       v
-          security-report.txt      generate-report.sh
-                                            |
-                                            v
-                                  security-report.html
-                                            |
-                                            v
-                                GitHub Actions Artifact
-~~~
+Linux  
+Rocky Linux  
+Bash / Shell Script  
+Git  
+GitHub  
+GitHub Actions  
+Self-hosted Runner  
+Linux Security  
+Security Compliance  
+HTML
 
 ---
 
-## 5. 프로젝트 구조
+## 5. Project Structure
 
-~~~text
-linux-security-compliance/
-│
-├── README.md
-│
-├── scripts/
-│   ├── security-check.sh
-│   └── generate-report.sh
-│
-├── config/
-│
-├── reports/
-│   └── security-report.txt
-│
-└── .github/
-    └── workflows/
-        └── security-check.yml
-~~~
+    linux-security-compliance/
+    │
+    ├── README.md
+    │
+    ├── scripts/
+    │   ├── security-check.sh
+    │   └── generate-report.sh
+    │
+    ├── config/
+    │
+    ├── reports/
+    │   └── security-report.txt
+    │
+    └── .github/
+        └── workflows/
+            └── security-check.yml
 
-### 파일 설명
+### Main Components
 
-| 파일 | 설명 |
+| File | Description |
 |---|---|
-| `scripts/security-check.sh` | Linux 보안 상태를 점검하는 메인 Script |
-| `scripts/generate-report.sh` | TXT 결과를 HTML Report로 변환 |
-| `.github/workflows/security-check.yml` | GitHub Actions Workflow |
-| `reports/security-report.txt` | 보안 점검 결과 |
-| `reports/security-report.html` | HTML 형식의 점검 결과 |
+| `security-check.sh` | Linux 보안 상태 점검 Script |
+| `generate-report.sh` | TXT Report를 HTML Report로 변환 |
+| `security-check.yml` | GitHub Actions Workflow |
+| `security-report.txt` | 보안 점검 결과 |
+| `security-report.html` | HTML 형식의 보안 점검 결과 |
 
 ---
 
-## 6. 보안 점검 항목
+## 6. Security Compliance Check
 
-총 30개의 Linux 보안 및 운영 상태를 점검합니다.
+Linux 서버의 주요 보안 설정 및 운영 상태를 총 30개 항목으로 점검합니다.
 
-| ID | 점검 항목 |
+| ID | Check |
 |---|---|
 | U-01 | Root 원격 로그인 제한 |
 | U-02 | SSH 설정 확인 |
@@ -162,410 +187,262 @@ linux-security-compliance/
 | U-29 | Root 파일시스템 사용량 |
 | U-30 | 주요 보안 서비스 실행 상태 |
 
----
+### Security Check Script
 
-## 7. Security Check
+    chmod +x scripts/security-check.sh
+    ./scripts/security-check.sh
 
-메인 점검 Script는 Linux 서버의 보안 설정 및 운영 상태를 확인합니다.
+### Execution Result
 
-실행:
+    Linux Security Compliance Report
+    ========================================
 
-~~~bash
-chmod +x scripts/security-check.sh
-./scripts/security-check.sh
-~~~
+    [FAIL] U-01 - Root 원격 로그인 제한
+    [PASS] U-02 - SSH 설정 확인
+    [FAIL] U-03 - 패스워드 최대 사용 기간
+    [FAIL] U-04 - Firewall 활성화
+    [PASS] U-05 - SSH 서비스 활성화 상태
+    [PASS] U-06 - 일반 사용자 계정 확인
+    [PASS] U-07 - 추가 UID 0 계정 존재 여부
+    [PASS] U-08 - /etc/passwd 파일 권한
+    [PASS] U-09 - /etc/shadow 파일 권한
+    [PASS] U-10 - SSH 서비스 실행 상태
+    ...
+    [PASS] U-30 - 주요 보안 서비스 실행 상태
 
-실행 결과:
+    ========================================
+    PASS : 21
+    FAIL : 9
 
-~~~text
-Linux Security Compliance Report
-========================================
+### Test Result
 
-[FAIL] U-01 - Root 원격 로그인 제한
-[PASS] U-02 - SSH 설정 확인
-[FAIL] U-03 - 패스워드 최대 사용 기간
-[FAIL] U-04 - Firewall 활성화
-[PASS] U-05 - SSH 서비스 활성화 상태
-[PASS] U-06 - 일반 사용자 계정 확인
-[PASS] U-07 - 추가 UID 0 계정 존재 여부
-[PASS] U-08 - /etc/passwd 파일 권한
-[PASS] U-09 - /etc/shadow 파일 권한
-[PASS] U-10 - SSH 서비스 실행 상태
-...
-[PASS] U-30 - 주요 보안 서비스 실행 상태
-
-========================================
-PASS : 21
-FAIL : 9
-~~~
-
-현재 테스트 환경에서는 총 30개 항목 중 다음과 같은 결과가 확인되었습니다.
-
-~~~text
-PASS : 21
-FAIL : 9
-~~~
+| Item | Result |
+|---|---:|
+| Total Checks | 30 |
+| PASS | 21 |
+| FAIL | 9 |
+| Compliance | 70% |
 
 본 프로젝트는 진단 목적의 프로젝트입니다.
 
 FAIL 항목이 발견되더라도 Script가 서버의 설정을 자동으로 변경하지 않습니다.
 
-예를 들어 다음과 같은 설정을 자동으로 변경하지 않습니다.
-
-- SSH 설정
-- Firewall 설정
-- SELinux 설정
-- Password Policy
-- 파일 권한
-
-따라서 실제 운영 서버의 현재 보안 상태를 확인하고 필요한 조치를 별도의 운영 절차를 통해 수행할 수 있도록 구성했습니다.
+SSH, Firewall, SELinux, Password Policy, 파일 권한 등의 설정은 자동으로 변경하지 않고 현재 서버의 상태만 진단하도록 구성했습니다.
 
 ---
 
-## 8. HTML Report
+## 7. GitHub Actions
 
-TXT 형태의 결과를 사람이 쉽게 확인할 수 있도록 HTML Report를 자동 생성합니다.
+GitHub Actions를 이용하여 보안 점검 프로세스를 자동화했습니다.
 
-실행:
+### Workflow
 
-~~~bash
-chmod +x scripts/generate-report.sh
-./scripts/generate-report.sh
-~~~
+    Git Push
+       ↓
+    Checkout Repository
+       ↓
+    Security Compliance Check
+       ↓
+    Generate HTML Report
+       ↓
+    Display Report
+       ↓
+    Upload Artifact
 
-생성 결과:
+### Workflow Configuration
 
-~~~text
-reports/
-├── security-report.txt
-└── security-report.html
-~~~
+    name: Linux Security Compliance
 
-HTML Report에는 다음 정보가 포함됩니다.
+    on:
+      push:
+        branches:
+          - main
+      workflow_dispatch:
 
-- Total Checks
-- PASS
-- FAIL
-- Compliance
-- Individual Check Results
+    jobs:
+      security-check:
+        runs-on: self-hosted
 
-현재 테스트 결과:
+        steps:
+          - name: Checkout repository
+            uses: actions/checkout@v4
 
-~~~text
-Total Checks : 30
-PASS         : 21
-FAIL         : 9
-Compliance   : 70%
-~~~
+          - name: Run security compliance check
+            run: |
+              chmod +x scripts/security-check.sh
+              ./scripts/security-check.sh
 
-HTML Report는 GitHub Actions 실행 후 Artifact로 보관됩니다.
+          - name: Generate HTML report
+            run: |
+              chmod +x scripts/generate-report.sh
+              ./scripts/generate-report.sh
 
----
+          - name: Display security report
+            run: |
+              cat reports/security-report.txt
 
-## 9. GitHub Actions
-
-GitHub Actions를 이용하여 보안 점검 과정을 자동화했습니다.
-
-Workflow 파일:
-
-~~~text
-.github/workflows/security-check.yml
-~~~
-
-실행 과정:
-
-~~~text
-git push
-   ↓
-GitHub Actions
-   ↓
-Checkout Repository
-   ↓
-security-check.sh
-   ↓
-security-report.txt
-   ↓
-generate-report.sh
-   ↓
-security-report.html
-   ↓
-Upload Artifact
-~~~
-
-Workflow:
-
-~~~yaml
-name: Linux Security Compliance
-
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
-jobs:
-  security-check:
-    runs-on: self-hosted
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Run security compliance check
-        run: |
-          chmod +x scripts/security-check.sh
-          ./scripts/security-check.sh
-
-      - name: Generate HTML report
-        run: |
-          chmod +x scripts/generate-report.sh
-          ./scripts/generate-report.sh
-
-      - name: Display security report
-        run: |
-          cat reports/security-report.txt
-
-      - name: Upload security reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: security-compliance-report
-          path: |
-            reports/security-report.txt
-            reports/security-report.html
-~~~
+          - name: Upload security reports
+            uses: actions/upload-artifact@v4
+            with:
+              name: security-compliance-report
+              path: |
+                reports/security-report.txt
+                reports/security-report.html
 
 ---
 
-## 10. Self-hosted Runner
+## 8. Self-hosted Runner
 
-GitHub Actions 실행 환경으로 Linux 서버를 직접 사용하는 Self-hosted Runner를 구성했습니다.
+GitHub Actions의 실행 환경으로 직접 관리하는 Linux 서버를 Self-hosted Runner로 구성했습니다.
 
-구성:
+    GitHub
+       |
+       v
+    GitHub Actions
+       |
+       v
+    Self-hosted Runner
+       |
+       v
+    devops-lab
 
-~~~text
-GitHub
-   |
-   v
-GitHub Actions
-   |
-   v
-Self-hosted Runner
-   |
-   v
-devops-lab
-~~~
+### Runner Configuration
 
-Runner 환경:
-
-~~~text
-Runner Name : devops-lab
-OS          : Linux
-Architecture: x64
-~~~
+    Runner Name : devops-lab
+    OS          : Linux
+    Architecture: x64
 
 Runner 실행:
 
-~~~bash
-./run.sh
-~~~
+    ./run.sh
 
 GitHub Repository에서 다음 메뉴를 통해 Runner 상태를 확인할 수 있습니다.
 
-~~~text
-Settings
-  ↓
-Actions
-  ↓
-Runners
-~~~
+    Settings
+      ↓
+    Actions
+      ↓
+    Runners
 
 ---
 
-## 11. 실행 방법
+## 9. Security Report
 
-### 11.1 Repository Clone
+보안 점검 결과는 TXT 형식으로 생성되며, 별도의 Script를 통해 HTML Report로 변환됩니다.
 
-~~~bash
-git clone https://github.com/dpskst/linux-security-compliance.git
-cd linux-security-compliance
-~~~
+### TXT Report
 
-### 11.2 Script 실행 권한 설정
+    reports/security-report.txt
 
-~~~bash
-chmod +x scripts/security-check.sh
-chmod +x scripts/generate-report.sh
-~~~
+### HTML Report
 
-### 11.3 보안 점검 실행
+    reports/security-report.html
 
-~~~bash
-./scripts/security-check.sh
-~~~
+### HTML Report Generation
 
-### 11.4 HTML Report 생성
+    chmod +x scripts/generate-report.sh
+    ./scripts/generate-report.sh
 
-~~~bash
-./scripts/generate-report.sh
-~~~
+### Report Result
 
-### 11.5 결과 확인
+    Total Checks : 30
+    PASS         : 21
+    FAIL         : 9
+    Compliance   : 70%
 
-~~~bash
-cat reports/security-report.txt
-~~~
+HTML Report는 GitHub Actions 실행 후 Artifact로 업로드됩니다.
 
-HTML 파일 확인:
-
-~~~bash
-ls -l reports/
-~~~
+    security-compliance-report
+    ├── security-report.txt
+    └── security-report.html
 
 ---
 
-## 12. GitHub Actions 결과
+## 10. Execution Result
 
-GitHub에 Push하면 자동으로 Workflow가 실행됩니다.
+GitHub Actions 실행을 통해 Linux 서버의 보안 상태를 자동으로 점검했습니다.
 
-~~~text
-Push
- ↓
-Checkout
- ↓
-Security Check
- ↓
-Generate HTML Report
- ↓
-Display Report
- ↓
-Upload Artifact
-~~~
+### Result
 
-GitHub Actions의 Artifact에서 다음 결과를 확인할 수 있습니다.
+    ========================================
+    PASS : 21
+    FAIL : 9
+    ========================================
 
-~~~text
-security-compliance-report
-├── security-report.txt
-└── security-report.html
-~~~
+### Compliance
 
-HTML Report는 Artifact를 다운로드한 후 브라우저에서 확인할 수 있습니다.
+    70%
+
+실제 서버의 현재 설정을 기준으로 결과를 생성하기 때문에 FAIL 항목 역시 실제 환경의 상태를 반영합니다.
+
+본 프로젝트에서는 점검 결과를 기반으로 서버 설정을 자동 수정하지 않고, 진단 결과를 제공하는 단계까지 구현했습니다.
 
 ---
 
-## 13. Troubleshooting
+## 11. Troubleshooting
 
-### 13.1 Report Permission 문제
+### 11.1 Report Permission Issue
 
-초기 Script에서는 Report 경로를 절대경로로 설정했습니다.
+초기 Report 경로를 절대경로로 지정했습니다.
 
-~~~text
-/root/project-05-security/reports/security-report.txt
-~~~
+    /root/project-05-security/reports/security-report.txt
 
-하지만 GitHub Actions Self-hosted Runner는 `actions` 사용자로 Workflow를 실행하기 때문에 해당 경로에 파일을 생성하는 과정에서 Permission 문제가 발생했습니다.
+하지만 GitHub Actions Self-hosted Runner는 `actions` 사용자로 실행되기 때문에 해당 경로에 Report를 생성하는 과정에서 Permission 문제가 발생했습니다.
 
-수정:
+### Solution
 
-~~~bash
-REPORT="$(dirname "$0")/../reports/security-report.txt"
-~~~
+Script 위치를 기준으로 상대경로를 사용하도록 변경했습니다.
 
-Script 위치를 기준으로 상대 경로를 사용하도록 변경하여 Repository 내부의 `reports` 디렉터리에 Report가 생성되도록 수정했습니다.
+    REPORT="$(dirname "$0")/../reports/security-report.txt"
+
+이를 통해 Repository 내부의 `reports` 디렉터리에 Report가 생성되도록 수정했습니다.
 
 ---
 
-### 13.2 GitHub Actions YAML 오류
+### 11.2 GitHub Actions YAML Syntax Error
 
-Workflow 작성 과정에서 YAML indentation 문제로 다음과 같은 오류가 발생했습니다.
+초기 Workflow 작성 과정에서 YAML indentation 문제로 다음과 같은 오류가 발생했습니다.
 
-~~~text
-Invalid workflow file
-You have an error in your yaml syntax
-~~~
+    Invalid workflow file
+    You have an error in your yaml syntax
 
-Workflow의 indentation 및 Artifact `path` 설정을 수정하여 해결했습니다.
+Workflow indentation 및 Artifact `path` 설정을 수정하여 해결했습니다.
 
 최종적으로 TXT와 HTML Report를 모두 Artifact로 업로드하도록 구성했습니다.
 
 ---
 
-## 14. 프로젝트 결과
-
-본 프로젝트를 통해 Linux 서버의 보안 점검 과정을 자동화했습니다.
-
-### 구현 결과
-
-- 30개 Linux 보안 점검 항목 구현
-- Bash 기반 보안 진단 Script 작성
-- PASS / FAIL 결과 자동 생성
-- TXT Report 생성
-- HTML Report 생성
-- GitHub Actions 자동 실행
-- Self-hosted Runner 구성
-- GitHub Actions Artifact 결과 보관
-
-### 테스트 결과
-
-~~~text
-Total Checks : 30
-PASS         : 21
-FAIL         : 9
-Compliance   : 70%
-~~~
-
----
-
-## 15. 주요 경험
+## 12. What I Learned
 
 ### Linux Security
 
-Linux 서버의 SSH, 사용자 계정, 파일 권한, Firewall, SELinux, Audit, Logging 등의 상태를 자동으로 점검하는 Script를 구현했습니다.
+SSH, 사용자 계정, 파일 권한, Firewall, SELinux, Audit 및 Logging 등 Linux 서버의 주요 보안 설정을 자동으로 점검하는 방법을 경험했습니다.
 
-### Shell Script
+### Shell Script Automation
 
-Linux 시스템 정보를 수집하고 조건에 따라 PASS / FAIL을 판단하는 Bash Script를 작성했습니다.
+Linux 시스템 정보를 수집하고 조건에 따라 PASS / FAIL을 판단하는 Bash Script를 구현했습니다.
 
 ### GitHub Actions
 
-Git Push를 기준으로 보안 점검을 자동 실행하고 결과를 Artifact로 저장하는 자동화 환경을 구성했습니다.
+Git Push를 기준으로 보안 점검을 자동 실행하고 결과를 Artifact로 저장하는 CI 자동화 환경을 구축했습니다.
 
 ### Self-hosted Runner
 
-직접 관리하는 Linux 서버를 GitHub Actions의 실행 환경으로 구성했습니다.
+GitHub에서 제공하는 호스팅 Runner가 아닌 직접 관리하는 Linux 서버를 GitHub Actions 실행 환경으로 구성했습니다.
 
 ### Security Automation
 
-반복적으로 수행해야 하는 Linux 보안 점검 작업을 자동화하여 점검 과정과 결과를 표준화했습니다.
+반복적인 Linux 보안 점검 업무를 자동화하여 점검 과정과 결과를 표준화하는 경험을 쌓았습니다.
 
 ---
 
-## 16. 향후 개선 방향
+## 13. Future Improvements
 
-### 16.1 점검 항목 확대
-
-현재 30개 항목에서 추가적인 Linux 보안 기준을 적용하여 점검 범위를 확대할 수 있습니다.
-
-### 16.2 JSON Report
-
-TXT / HTML Report 외에 JSON 형식의 결과를 생성하여 다른 시스템과 연계할 수 있도록 확장할 수 있습니다.
-
-### 16.3 다중 서버 점검
-
-여러 Linux 서버를 대상으로 동일한 보안 점검 Script를 실행하고 서버별 Compliance 상태를 중앙에서 관리하는 구조로 확장할 수 있습니다.
-
-### 16.4 Monitoring 연계
-
-Prometheus / Grafana와 연계하여 서버별 보안 Compliance 상태를 Dashboard로 시각화할 수 있습니다.
-
-### 16.5 Ansible 연계
-
-현재의 진단 기능과 별도로 Ansible을 이용한 보안 설정 자동화 기능으로 확장할 수 있습니다.
+- 보안 점검 항목 추가
+- JSON 형식 Report 추가
+- 여러 Linux 서버에 대한 중앙화된 점검
+- Prometheus / Grafana 기반 Compliance Dashboard
+- Ansible을 이용한 별도의 보안 설정 자동화
+- 서버별 Compliance 이력 관리
 
 ---
-
-## 17. Repository
-
-GitHub Repository
-
-https://github.com/dpskst/linux-security-compliance
