@@ -307,6 +307,9 @@ GitHub Repository에서 다음 메뉴를 통해 Runner 상태를 확인할 수 �
       ↓
     Runners
 
+<img width="805" height="600" alt="image" src="https://github.com/user-attachments/assets/3dd314d1-409a-4d0c-9595-9b72e4545939" />
+
+
 ---
 
 ## 9. Security Report
