@@ -12,8 +12,28 @@
 [PASS] U-08 - /etc/passwd 파일 권한
 [PASS] U-09 - /etc/shadow 파일 권한
 [PASS] U-10 - SSH 서비스 실행 상태
+[FAIL] U-11 - SSH 기본 포트 사용 여부
+[FAIL] U-12 - SSH PasswordAuthentication 비활성화
+[PASS] U-13 - SSH 빈 패스워드 로그인 제한
+[FAIL] U-14 - SSH X11Forwarding 비활성화
+[FAIL] U-15 - Firewall 활성화 상태
+[FAIL] U-16 - SELinux 활성화 상태
+[PASS] U-17 - auditd 서비스 실행 상태
+[PASS] U-18 - rsyslog 서비스 실행 상태
+[PASS] U-19 - 시간 동기화 서비스 상태
+[PASS] U-20 - 실행 중 서비스 확인
+[PASS] U-21 - /etc/passwd 소유자 및 권한
+[FAIL] U-22 - /etc/shadow 소유자 및 권한
+[PASS] U-23 - /etc/group 소유자 및 권한
+[PASS] U-24 - SSH 설정 파일 권한
+[PASS] U-25 - /etc/hosts 파일 권한
+[PASS] U-26 - Audit 로그 존재 여부
+[PASS] U-27 - SSH 로그인 실패 로그 확인
+[PASS] U-28 - 최근 로그인 기록 확인
+[PASS] U-29 - Root 파일시스템 사용량
+[PASS] U-30 - 주요 보안 서비스 실행 상태
 
 ========================================
-PASS : 7
-FAIL : 3
+PASS : 21
+FAIL : 9
 ========================================
