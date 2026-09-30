@@ -319,6 +319,8 @@ GitHub Repository에서 다음 메뉴를 통해 Runner 상태를 확인할 수 �
 
 ### HTML Report
 
+<img width="599" height="825" alt="image" src="https://github.com/user-attachments/assets/ff7beedf-c04a-4874-b3d3-b82096e3ea2a" />
+
     reports/security-report.html
 
 ### HTML Report Generation
